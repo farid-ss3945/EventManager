@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block title %}Home - Mini Event Manager{% endblock %}
+{% block content %}
+<div class="row align-items-center py-5">
+    <div class="col-lg-6">
+        <h1 class="display-4 fw-bold mb-3">Organize & Join Events</h1>
+        <p class="lead text-muted mb-4">Manage your local events, track registrations, and stay connected.</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <a href="{% url 'events' %}" class="btn btn-primary btn-lg px-4 me-md-2">Browse Events</a>
+            <a href="{% url 'create_event' %}" class="btn btn-outline-secondary btn-lg px-4">Create Event</a>
+        </div>
+    </div>
+    <div class="col-lg-6 mt-4 mt-lg-0">
+        <div class="card shadow border-0 rounded-4 p-4 bg-white text-center">
+            <div class="card-body">
+                <h1 class="card-title text-primary mb-2">Upcoming</h1>
+                {% for e in events %}
+                    {% if e.status == 'upcoming' %}
+                        <h3 class="card-text text-muted">{{ e.title }}</h3>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <!-- your three feature cards stay here -->
+</div>
+{% endblock %}

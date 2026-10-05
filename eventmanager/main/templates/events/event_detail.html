@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ event.title }}{% endblock %}
+
+{% block content %}
+<div class="py-4">
+
+  <a href="{% url 'events' %}" class="btn btn-sm btn-outline-secondary rounded-pill mb-3">
+    ← All Events
+  </a>
+
+  <div class="card border-0 shadow-sm rounded-3">
+    <div class="card-body p-4 p-md-5 d-flex flex-column">
+
+      <div class="d-flex justify-content-between align-items-start mb-3">
+        <span class="badge bg-primary-subtle text-primary fw-medium px-2 py-1 rounded text-capitalize">
+          {{ event.category }}
+        </span>
+
+        {% if event.status == "upcoming" %}
+          <span class="badge bg-success-subtle text-success px-2 py-1 rounded">Upcoming</span>
+        {% elif event.status == "ongoing" %}
+          <span class="badge bg-warning-subtle text-warning-emphasis px-2 py-1 rounded">Ongoing</span>
+        {% elif event.status == "completed" %}
+          <span class="badge bg-secondary-subtle text-secondary px-2 py-1 rounded">Completed</span>
+        {% elif event.status == "cancelled" %}
+          <span class="badge bg-danger-subtle text-danger px-2 py-1 rounded">Cancelled</span>
+        {% endif %}
+      </div>
+
+      <h1 class="card-title fw-bold h3">{{ event.title }}</h1>
+
+      <p class="card-text text-muted mt-3">{{ event.description }}</p>
+
+      <div class="pt-3 border-top mt-3">
+        <span class="text-secondary">📍 {{ event.location }}</span>
+      </div>
+
+      <div class="pt-3 border-top mt-4 d-flex gap-2 justify-content-end">
+        {% if event.status != "cancelled" %}
+          <a href="?status=cancelled" type="button" class="btn btn-sm btn-outline-secondary fw-semibold">Cancel</a>
+        {% endif %}
+        <a href="{% url 'delete_event' event.id %}" type="button" class="btn btn-sm btn-outline-danger fw-semibold">Delete</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
